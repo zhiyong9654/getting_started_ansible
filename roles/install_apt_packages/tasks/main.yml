@@ -1,0 +1,15 @@
+- name: Install yum packages
+  yum:
+    name: git
+  become: yes
+
+# Installing many packages with loops, curly braces denote a variable, note that in this example, variables are defined in the role itself.
+- name: Install many yum packages e.g. Kubernetes
+  yum:
+    name: "{{ item }}"
+  loop:
+    - docker.io
+    - apt-transport-https
+    - kubelet
+    - kubeadm
+    - kubectl

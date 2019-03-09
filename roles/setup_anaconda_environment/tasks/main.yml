@@ -1,0 +1,32 @@
+- name: Copy anaconda script to node
+  copy:
+    src: ../files/Anaconda3-2018.12-Linux-x86_64.sh
+    dest: ~/
+    mode: '0755'
+
+- name: Check if anaconda is already installed
+  stat:
+    path: ~/anaconda3
+  register: anaconda_installed
+
+- name: Install anaconda
+  shell: '~/Anaconda3-2018.12-Linux-x86_64.sh -b'
+  when: not anaconda_installed.stat.exists
+
+- name: Add anaconda to path
+  lineinfile:
+    path: ~/.profile
+    line: "PATH=$PATH:$HOME/anaconda3/bin"
+
+- name: Check if conda virtual environment exist
+  shell: '. ~/.profile && conda env list | grep {{ env_name }}'
+  register: env_exist
+  ignore_errors: yes
+
+  #- name: Create conda virtual environment
+  #  block:
+  #    - copy:
+  #        src: ../files/environment.yml
+  #        dest: ~/environment.yml
+  #    - shell: '. ~/.profile && conda config --set offline True && conda env create -f environment.yml'
+  #  when: env_exist.rc == 1
