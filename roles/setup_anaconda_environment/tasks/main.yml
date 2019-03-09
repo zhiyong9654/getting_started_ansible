@@ -4,6 +4,7 @@
     dest: ~/
     mode: '0755'
 
+# Check is necessary for idempotence
 - name: Check if anaconda is already installed
   stat:
     path: ~/anaconda3
@@ -18,6 +19,7 @@
     path: ~/.profile
     line: "PATH=$PATH:$HOME/anaconda3/bin"
 
+# Note the calling of a variable that isn't locally defined
 - name: Check if conda virtual environment exist
   shell: '. ~/.profile && conda env list | grep {{ env_name }}'
   register: env_exist
