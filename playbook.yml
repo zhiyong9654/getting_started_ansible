@@ -4,3 +4,11 @@
     - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:8000', repo_type: 'free' }
     - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:8000', repo_type: 'main' }
     - setup_conda_environment
+
+- hosts: test
+  roles:
+    - create_diff_config1
+
+- hosts: test2
+  roles:
+    - create_diff_config2

@@ -1,0 +1,5 @@
+- name: 
+  template:
+    src: ../templates/config1.j2
+    dest: /home/config1
+  become: yes

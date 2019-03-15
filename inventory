@@ -4,3 +4,19 @@
 test:
   hosts:
     192.168.122.133:
+
+test2:
+  hosts:
+    192.168.122.206:
+
+# Assigning variables to multiple hosts
+webserver:
+  hosts:
+    192.168.122.133:
+    192.168.122.206:
+  vars:
+    # Yet another place to define variables
+    var1: 'team'
+    var2: 'anomalies'
+    var3: 'with'
+    var4: 'ansible!'
