@@ -1,6 +1,6 @@
 - hosts: test
   roles:
     - install_anaconda
-    - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:3000', repo_type: 'free' }
-    - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:3000', repo_type: 'main' }
+    - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:8000', repo_type: 'free' }
+    - { role: setup_conda_repo, conda_repo_url: 'http://192.168.122.1:8000', repo_type: 'main' }
     - setup_conda_environment
