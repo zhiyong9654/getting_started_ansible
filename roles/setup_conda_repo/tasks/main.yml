@@ -1,0 +1,10 @@
+- name: Set local conda repository
+  block:
+    - lineinfile:
+        path: ~/.condarc
+        create: yes
+        line: 'channels:'
+    - lineinfile:
+        path: ~/.condarc
+        insertafter: 'channels:'
+        line: '  - {{ conda_repo_url }}/pkgs/{{ repo_type }}'

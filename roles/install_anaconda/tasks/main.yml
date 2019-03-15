@@ -1,0 +1,21 @@
+# Check is necessary for idempotence
+- name: Check if anaconda is already installed
+  stat:
+    path: ~/anaconda3
+  register: anaconda_installed
+
+- name: Copy anaconda script to node
+  copy:
+    src: ../files/Anaconda3-2018.12-Linux-x86_64.sh
+    dest: ~/
+    mode: '0755'
+  when: not anaconda_installed.stat.exists
+
+- name: Install anaconda
+  shell: '~/Anaconda3-2018.12-Linux-x86_64.sh -b'
+  when: not anaconda_installed.stat.exists
+
+- name: Add anaconda to path
+  lineinfile:
+    path: ~/.profile
+    line: "PATH=$PATH:$HOME/anaconda3/bin"

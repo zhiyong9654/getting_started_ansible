@@ -1,0 +1,28 @@
+- name: Load environment yml
+  block:
+    - copy:
+        src: ../files/environment.yml
+        dest: ~/environment.yml
+    - shell: 'cat ~/environment.yml'
+      register: environment_yml
+
+- name: debug
+  debug:
+    var: environment_yml.stdout
+
+- name: debug
+  debug:
+    var: "{{ environment_yml.stdout | regex_search('name\\: (.*)','\\1') | first }}"
+
+- name: Check if conda virtual environment exist
+  shell: ". ~/.profile && conda env list | grep {{ environment_yml.std_out | regex_search('name\\: (.*)', '\\1') | first }}"
+  register: env_exist
+  ignore_errors: yes
+
+- name: Create conda virtual environment
+  block:
+    - copy:
+        src: ../files/environment.yml
+        dest: ~/environment.yml
+    - shell: '. ~/.profile && conda env create -f environment.yml'
+  when: env_exist.rc == 1
