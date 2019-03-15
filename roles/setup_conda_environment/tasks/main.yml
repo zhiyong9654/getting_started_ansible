@@ -8,17 +8,11 @@
     - set_fact: 
         env_name: "{{ environment_yml.stdout | regex_search('name\\: (.*)','\\1') | first }}"
 
-- name: debug
-  debug:
-    var: env_name
 
+# Necessary for idempotence
 - name: Check if conda virtual environment exist
   shell: '. ~/.profile && conda env list'
   register: env_exist
-
-- name: debug
-  debug:
-    var: env_exist.stdout
 
 - name: Create conda virtual environment
   block:
