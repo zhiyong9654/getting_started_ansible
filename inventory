@@ -4,5 +4,3 @@
 test:
   hosts:
     192.168.122.133:
-  vars:
-    env_name: test
